@@ -228,10 +228,10 @@ my %json_data;
 $json_data{last_update}          = "".$update;
 $json_data{total_active}         = $total_active_witnesses;
 $json_data{witnesses_list_html}  = $buff_html_array;
-
+$json_data{witnesses_stats}      = $witnesses_stats;
 my %validations_map;
 foreach my $addr (keys %{$witnesses_stats}){
-    $validations_map{$addr} = $witnesses_stats->{$addr}->{validations_count};
+    $validations_map{$addr} = $witnesses_stats- >{$addr}->{validations_count};
 }
 $json_data{witnesses_validations} = \%validations_map;
 
