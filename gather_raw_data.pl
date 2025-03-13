@@ -225,9 +225,15 @@ $json_data{witnesses_stats}      = $witnesses_stats;
 
 my $json_out = encode_json(\%json_data);
 my $json_file = 'www/op_stats.json';
-open(my $fh_json, '>', $json_file) or die "Could not open file '$json_file' $!";
-print $fh_json $json_out;
-close $fh_json;
+eval {
+    open(my $fh_json, '>', $json_file) or die "Could not open file '$json_file' $!";
+    print $fh_json $json_out;
+    close $fh_json;
+    print "Successfully wrote witness statistics to $json_file\n";
+};
+if ($@) {
+    warn "Error writing JSON data: $@";
+}
 
 #pass 2: top 100
 my $total_add_with_balance=0;
