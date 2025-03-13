@@ -218,12 +218,12 @@ open(my $fh, '>', $filename) or die "Could not open file '$filename' $!";
 print $fh $new_stats;
 close $fh;
 
-my %json_data;
-$json_data{last_update}          = "".$update;
-$json_data{total_active}         = $total_active_witnesses;
-$json_data{witnesses_stats}      = $witnesses_stats;
+my %json_stats_data;
+$json_stats_data{last_update}          = "".$update;
+$json_stats_data{total_active}         = $total_active_witnesses;
+$json_stats_data{witnesses_stats}      = $witnesses_stats;
 
-my $json_out = encode_json(\%json_data);
+my $json_out = encode_json(\%json_stats_data);
 my $json_file = 'www/op_stats.json';
 eval {
     open(my $fh_json, '>', $json_file) or die "Could not open file '$json_file' $!";
