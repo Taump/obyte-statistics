@@ -200,9 +200,12 @@ foreach (@ops)#last timestamp
 	}
 	 
 }#end of foreach arrayofwitnesses
-	
 
-	
+# After you've built all $witnesses_stats data, add a short block to dump transactions into JSON:
+my $filename_ws = 'www/op_stats.json';
+open(my $fh_ws, '>', $filename_ws) or die "Could not open file '$filename_ws' $!";
+print $fh_ws encode_json($witnesses_stats);
+close $fh_ws;
 
 $buff_html_array.="";
 
@@ -221,6 +224,22 @@ open(my $fh, '>', $filename) or die "Could not open file '$filename' $!";
 print $fh $new_stats;
 close $fh;
 
+my %json_data;
+$json_data{last_update}          = "".$update;
+$json_data{total_active}         = $total_active_witnesses;
+$json_data{witnesses_list_html}  = $buff_html_array;
+
+my %validations_map;
+foreach my $addr (keys %{$witnesses_stats}){
+    $validations_map{$addr} = $witnesses_stats->{$addr}->{validations_count};
+}
+$json_data{witnesses_validations} = \%validations_map;
+
+my $json_out = encode_json(\%json_data);
+my $json_file = 'www/witnesses-stats.json';
+open(my $fh_json, '>', $json_file) or die "Could not open file '$json_file' $!";
+print $fh_json $json_out;
+close $fh_json;
 
 #pass 2: top 100
 my $total_add_with_balance=0;
