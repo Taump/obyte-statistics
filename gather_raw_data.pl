@@ -236,7 +236,7 @@ foreach my $addr (keys %{$witnesses_stats}){
 $json_data{witnesses_validations} = \%validations_map;
 
 my $json_out = encode_json(\%json_data);
-my $json_file = 'www/witnesses-stats.json';
+my $json_file = 'www/op_stats.json';
 open(my $fh_json, '>', $json_file) or die "Could not open file '$json_file' $!";
 print $fh_json $json_out;
 close $fh_json;
